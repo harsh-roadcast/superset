@@ -108,6 +108,52 @@ SQLLAB_CTAS_NO_LIMIT = True
 # Optionally import superset_config_docker.py (which will have been included on
 # the PYTHONPATH) in order to allow for local settings to be overridden
 #
+
+
+PUBLIC_ROLE_LIKE = "Gamma"
+
+# App name
+APP_NAME = "roadcast-analytics-dashboard"
+
+FEATURE_FLAGS = {"ALERT_REPORTS": True, "EMBEDDED_SUPERSET": True}
+
+EMBEDDED_SUPERSET = True
+EMBEDDED_SUPERSET_ROLES = ["Admin", "Gamma"]
+ENABLE_CORS = True
+CORS_OPTIONS = {
+    "supports_credentials": True,
+    "origins": "*",
+    "allow_headers": ["Content-Type", "Authorization", "X-GuestToken", "Accept", "Origin", "X-Requested-With", "X-CSRFToken", "X-CSRF-Token"],
+    "expose_headers": ["*"],
+    "resources": ["*"],
+    "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
+}
+EMBEDDED_SUPERSET_JWT_SECRET = "Y2Jf8Q6VD0jljp1mvWwF_hUdn2AySczjYUEaTy2Q6DY"
+EMBEDDED_SUPERSET_JWT_ALG = "HS256"
+
+# Dashboard embedding
+GUEST_ROLE_NAME = "Gamma"
+GUEST_TOKEN_JWT_SECRET = "Y2Jf8Q6VD0jljp1mvWwF_hUdn2AySczjYUEaTy2Q6DY"
+GUEST_TOKEN_JWT_ALG = "HS256"
+GUEST_TOKEN_HEADER_NAME = "X-GuestToken"
+GUEST_TOKEN_JWT_EXP_SECONDS = 300  # 5 minutes
+
+WTF_CSRF_ENABLED = False
+TALISMAN_ENABLED = False
+
+# Additional headers for embedding
+OVERRIDE_HTTP_HEADERS = {
+    'X-Frame-Options': 'ALLOWALL',  # Allow embedding in iframes
+}
+# Flask-CORS additional settings
+CORS_SUPPORTS_CREDENTIALS = True
+
+ENABLE_PROXY_FIX = True
+SESSION_COOKIE_SAMESITE = None
+SESSION_COOKIE_SECURE = False
+
+ENABLE_TEMPLATE_PROCESSING = True
+
 try:
     import superset_config_docker
     from superset_config_docker import *  # noqa
@@ -117,3 +163,10 @@ try:
     )
 except ImportError:
     logger.info("Using default Docker config...")
+
+
+
+APP_NAME = "Roadcast Superset"
+APP_ICON = "/static/assets/images/my-logo.png"
+FAVICONS = [{"href": "/static/assets/images/my-favicon.png"}]
+    

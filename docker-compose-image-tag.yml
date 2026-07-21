@@ -28,6 +28,7 @@ x-superset-depends-on: &superset-depends-on
 x-superset-volumes:
   &superset-volumes # /app/pythonpath_docker will be appended to the PYTHONPATH in the final container
   - ./docker:/app/docker
+    #- ./superset:/app/superset
   - superset_home:/app/superset_home
 
 services:
@@ -66,6 +67,8 @@ services:
       - 8088:8088
     depends_on: *superset-depends-on
     volumes: *superset-volumes
+    extra_hosts:
+      - "host.docker.internal:10.10.0.4"
 
   superset-init:
     image: *superset-image
@@ -79,6 +82,8 @@ services:
     depends_on: *superset-depends-on
     user: "root"
     volumes: *superset-volumes
+    extra_hosts:
+      - "host.docker.internal:10.10.0.4"
     healthcheck:
       disable: true
 
@@ -95,6 +100,8 @@ services:
     depends_on: *superset-depends-on
     user: "root"
     volumes: *superset-volumes
+    extra_hosts:
+      - "host.docker.internal:10.10.0.4"
     healthcheck:
       test:
         [
@@ -115,6 +122,8 @@ services:
     depends_on: *superset-depends-on
     user: "root"
     volumes: *superset-volumes
+    extra_hosts:
+      - "host.docker.internal:10.10.0.4"
     healthcheck:
       disable: true
 
@@ -125,3 +134,4 @@ volumes:
     external: false
   redis:
     external: false
+
